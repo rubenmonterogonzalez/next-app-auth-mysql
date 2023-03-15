@@ -1,91 +1,64 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
+    <div className="flex h-screen bg-black">
+      <div className="w-screen h-screen flex flex-col justify-center items-center">
+        <Image
+          width={512}
+          height={512}
+          src="/logo.png"
+          alt="Platforms on Vercel"
+          className="w-48 h-48"
+          priority={true}
+        />
+        <div className="text-center max-w-screen-sm mb-10">
+          <h1 className="text-stone-200 font-bold text-2xl">
+            Next.js Prisma MySQL Auth Starter
+          </h1>
+          <p className="text-stone-400 mt-5">
+            This is a{" "}
+            <a
+              href="https://nextjs.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-400 underline hover:text-stone-200 transition-all"
+            >
+              Next.js
+            </a>{" "}
+            starter kit that uses{" "}
+            <a
+              href="https://next-auth.js.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-400 underline hover:text-stone-200 transition-all"
+            >
+              Next-Auth
+            </a>{" "}
+            for simple email + password login and a MySQL database to persist
+            the data.
+          </p>
+        </div>
+        <div className="flex space-x-3">
+          <Link
+            href="/protected"
+            prefetch={false} // workaround until https://github.com/vercel/vercel/pull/8978 is deployed
+            className="text-stone-400 underline hover:text-stone-200 transition-all"
+          >
+            Protected Page
+          </Link>
+          <p className="text-white">·</p>
           <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://github.com/steven-tey/nextjs-typescript-starter"
             target="_blank"
             rel="noopener noreferrer"
+            className="text-stone-400 underline hover:text-stone-200 transition-all"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
+            GitHub
           </a>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }

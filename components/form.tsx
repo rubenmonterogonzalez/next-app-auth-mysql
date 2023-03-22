@@ -11,48 +11,50 @@ export default function Form({ type }: { type: "login" | "register" }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    if (type === "login") {
+      signIn("credentials", {
+        redirect: false,
+        email: e.currentTarget.email.value,
+        password: e.currentTarget.password.value,
+        // @ts-ignore
+      }).then(({ ok, error }) => {
+        setLoading(false);
+        if (ok) {
+          router.push("/protected");
+        } else {
+          toast.error(error);
+        }
+      });
+    } else {
+      fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: e.currentTarget.email.value,
+          password: e.currentTarget.password.value,
+        }),
+      }).then(async (res) => {
+        setLoading(false);
+        if (res.status === 200) {
+          toast.success("Account created! Redirecting to login...");
+          setTimeout(() => {
+            router.push("/login");
+          }, 2000);
+        } else {
+          toast.error(await res.text());
+        }
+      });
+    }
+  };
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setLoading(true);
-        if (type === "login") {
-          signIn("credentials", {
-            redirect: false,
-            email: e.currentTarget.email.value,
-            password: e.currentTarget.password.value,
-            // @ts-ignore
-          }).then(({ ok, error }) => {
-            setLoading(false);
-            if (ok) {
-              router.push("/protected");
-            } else {
-              toast.error(error);
-            }
-          });
-        } else {
-          fetch("/api/auth/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: e.currentTarget.email.value,
-              password: e.currentTarget.password.value,
-            }),
-          }).then(async (res) => {
-            setLoading(false);
-            if (res.status === 200) {
-              toast.success("Account created! Redirecting to login...");
-              setTimeout(() => {
-                router.push("/login");
-              }, 2000);
-            } else {
-              toast.error(await res.text());
-            }
-          });
-        }
-      }}
+      onSubmit={handleSubmit}
       className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
     >
       <div>
